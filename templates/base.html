@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}tytul strony{% endblock %}</title>
+</head>
+
+<body>
+    <!tresc strony-->
+
+    <div>
+        MENU GLOWNE:{% if user.is_authenticated %}<a href="{% url 'account_logout' %}">wyloguj sie</a> {% else %} <a href="{% url 'account_login' %}">zaloguj sie</a>,<a href="{% url 'account_signup' %}">załóż konto</a>{% endif %}
+    </div>
+
+    {% block content %}
+
+    {% endblock %}
+
+</body>
+
+
+</html>

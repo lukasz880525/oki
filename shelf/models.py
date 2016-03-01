@@ -2,6 +2,7 @@
 from __future__ import unicode_literals,absolute_import
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.core.urlresolvers import reverse_lazy
 
 # Create your models here.
 
@@ -43,14 +44,17 @@ class Book(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):   # drugi sposób wyswietlania - zobacz author_detail.html
+        return reverse_lazy('shelf:book-detail',kwargs={'pk':self.id})
+
 class BookEdition(models.Model):
-    isbn = models.CharField(max_length=17)
+    isbn = models.CharField(max_length=17,blank=True)
     publisher = models.ForeignKey(Publisher)
-    book = models.ForeignKey(Book)
+    book = models.ForeignKey(Book, related_name='editions')
     date = models.DateField()
 
     def __str__(self):
-        return '(book.title),(publisher.name)'.format(book=self.book,publisher=self.publisher)
+        return '{book.title},{publisher.name}'.format(book=self.book,publisher=self.publisher)
 
 
 
